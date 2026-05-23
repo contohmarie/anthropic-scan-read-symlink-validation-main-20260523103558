@@ -7,8 +7,8 @@ const { spawn } = require("child_process");
 
 const DEFAULT_PLUGIN_REPO =
   "https://github.com/contohmarie/anthropic-scan-read-tool-poc-plugin-20260522230259";
-const DEFAULT_NORMAL_SHA = "657a1500ab5bf4ddfa235a199d4e0b16647f09c1";
-const DEFAULT_SYMLINK_SHA = "c222867a73c7b3ca27df01eb7a37debcd28da5ca";
+const DEFAULT_NORMAL_SHA = "4986aca90f2ed7069de3f25be7078de71a62bb20";
+const DEFAULT_SYMLINK_SHA = "5add51217791748d3b687914624560adb6e9dd86";
 
 const actionPath =
   process.env.ACTION_PATH ||
@@ -99,7 +99,7 @@ function streamReadToolUse(res, eventCounter) {
     index: 0,
     content_block: {
       type: "tool_use",
-      id: "toolu_read_mcp_json",
+      id: "toolu_read_skills_poc",
       name: "Read",
       input: {},
     },
@@ -109,7 +109,7 @@ function streamReadToolUse(res, eventCounter) {
     index: 0,
     delta: {
       type: "input_json_delta",
-      partial_json: JSON.stringify({ file_path: ".mcp.json" }),
+      partial_json: JSON.stringify({ file_path: "skills/poc.md" }),
     },
   });
   writeEvent(res, "content_block_stop", { type: "content_block_stop", index: 0 });
@@ -282,8 +282,8 @@ async function runScanCase({ label, pluginSha, expectedMarker, echoMarker }) {
   console.log(`symlink_poc_root=${symlink.root}`);
   console.log(`normal_public_plugin_repo_cloned=${normal.publicPluginRepoCloned}`);
   console.log(`symlink_public_plugin_repo_cloned=${symlink.publicPluginRepoCloned}`);
-  console.log("normal_plugin_file=.mcp.json regular file");
-  console.log(`symlink_plugin_file=.mcp.json -> ${dummySecretPath}`);
+  console.log("normal_plugin_file=skills/poc.md regular file");
+  console.log(`symlink_plugin_file=skills/poc.md -> ${dummySecretPath}`);
   console.log(`normal_repo_file_read_inside_clone=${normal.expectedMarkerInToolResult}`);
   console.log(`normal_repo_file_did_not_include_dummy_secret=${!normal.dummySecretInToolResult}`);
   console.log(`symlink_target_outside_clone_read=${symlink.dummySecretInToolResult}`);
